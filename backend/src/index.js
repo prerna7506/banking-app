@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 import accountRoutes from './routes/accountRoutes.js'
 import { typeDefs, resolvers } from "./graphql/schema.js";
 import { authMiddleware } from "./middleware/auth.js";
-
+import loanRoutes from './routes/loanRoutes.js';
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -24,7 +24,7 @@ const server = new ApolloServer({
 const startServer = async () => {
   await server.start();
   app.use("/api/accounts", accountRoutes) //integrationg REST API routes
-  
+  app.use('/api/loans', loanRoutes);
   app.use(
     "/graphql",
     expressMiddleware(server, {
